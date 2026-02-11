@@ -1,0 +1,11 @@
+# App Configuration
+app.frontend.url=http://127.0.0.1:5500
+server.port=8080
+
+# Database
+spring.data.mongodb.uri=mongodb+srv://<username>:<password>@cluster.mongodb.net/ecommerce
+
+# OAuth2 Credentials (Get these from Google Cloud Console)
+spring.security.oauth2.client.registration.google.client-id=YOUR_CLIENT_ID
+spring.security.oauth2.client.registration.google.client-secret=YOUR_CLIENT_SECRET
+spring.security.oauth2.client.registration.google.scope=profile,email
