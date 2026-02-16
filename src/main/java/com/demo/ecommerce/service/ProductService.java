@@ -14,10 +14,8 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
-
         return repo.save(product);
     }
-
 
     public List<Product> getProductsByOwner(String email) {
         return repo.findByOwnerEmail(email);
@@ -27,7 +25,9 @@ public class ProductService {
         return repo.findAll();
     }
 
-    public void deleteProduct(String id) {
+
+    
+    public void deleteProduct(Long id) {
         repo.deleteById(id);
     }
 }
