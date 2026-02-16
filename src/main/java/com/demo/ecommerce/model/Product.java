@@ -1,21 +1,28 @@
 package com.demo.ecommerce.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*; 
 
-@Document(collection = "products")
+@Entity 
+@Table(name = "products") 
 public class Product {
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; 
     private String name;
+    
+    @Column(columnDefinition = "TEXT") 
     private String description;
+    
     private double price;
     private String imageUrl;
     private String ownerEmail;
 
+    
     public Product() {}
 
-    public Product(String id, String name, String description, double price, String imageUrl, String ownerEmail) {
+
+    public Product(Long id, String name, String description, double price, String imageUrl, String ownerEmail) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,16 +31,22 @@ public class Product {
         this.ownerEmail = ownerEmail;
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+  
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+    
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
+    
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    
     public String getOwnerEmail() { return ownerEmail; }
     public void setOwnerEmail(String ownerEmail) { this.ownerEmail = ownerEmail; }
 }
