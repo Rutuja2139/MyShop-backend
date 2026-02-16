@@ -2,7 +2,6 @@ package com.demo.ecommerce.controller;
 
 import com.demo.ecommerce.model.User;
 import com.demo.ecommerce.service.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,7 +12,6 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/auth")
-
 @CrossOrigin(origins = "${app.frontend.url}", allowCredentials = "true")
 public class AuthController {
     private final UserService service;
@@ -26,18 +24,27 @@ public class AuthController {
         if (principal != null) {
             details.put("name", principal.getAttribute("name"));
             details.put("email", principal.getAttribute("email"));
+
+            
+            details.put("picture", principal.getAttribute("picture"));
         }
         return details;
     }
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody User user) {
+    public Map<String, Object> login(@RequestBody Map<String, String> loginData) {
         Map<String, Object> response = new HashMap<>();
-        User loggedInUser = service.login(user.getEmail(), user.getPassword());
+     
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+
+        User loggedInUser = service.login(email, password);
         if (loggedInUser != null) {
             response.put("status", "success");
             response.put("name", loggedInUser.getName());
             response.put("email", loggedInUser.getEmail());
+          
+            response.put("id", loggedInUser.getId()); 
         } else {
             response.put("status", "fail");
         }
@@ -46,6 +53,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
+  
         User registeredUser = service.register(user);
         if (registeredUser == null) {
             Map<String, String> error = new HashMap<>();
